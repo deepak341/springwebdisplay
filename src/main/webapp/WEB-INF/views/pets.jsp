@@ -11,7 +11,7 @@
 <title>Pets</title>
 </head>
 <body>
-
+	<h5 color='red'>${message}</h5>
 	<h3> Add Pet </h3>
 	<sform:form method="post" modelAttribute="pets" action="savePets">
 	<sform:hidden path="_id" />

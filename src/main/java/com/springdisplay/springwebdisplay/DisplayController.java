@@ -1,9 +1,5 @@
 package com.springdisplay.springwebdisplay;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
@@ -51,7 +47,7 @@ public class DisplayController {
 		HttpEntity<String> request = new HttpEntity<String>("", headers);
 		System.out.println("petsListUri: "+petsListUri);
 		ResponseEntity<String> response = restTemplate.exchange(petsListUri+id, HttpMethod.DELETE, request, String.class);
-		model.addAttribute("message", "Record deleted successfully");
+		//model.addAttribute("message", "Record deleted successfully");
 		System.out.println(response.getBody());
 		return "redirect:/getPetsList";
 	}
@@ -67,7 +63,7 @@ public class DisplayController {
 		HttpEntity<Pets> request = new HttpEntity<Pets>(pets, headers);
 		System.out.println("petsListUri: "+petsListUri);
 		ResponseEntity<String> response = restTemplate.exchange(petsListUri, HttpMethod.POST, request, String.class);
-		model.addAttribute("message", "Record added successfully");
+		//model.addAttribute("message", "Record added successfully");
 		System.out.println(response.getBody());
 		return "redirect:/getPetsList";
 	}
