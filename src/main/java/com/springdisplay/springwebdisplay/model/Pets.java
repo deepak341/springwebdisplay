@@ -1,4 +1,4 @@
-package com.springdisplay.springwebdisplay;
+package com.springdisplay.springwebdisplay.model;
 
 public class Pets {
   

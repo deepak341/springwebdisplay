@@ -14,4 +14,7 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
+	<!-- <beans:bean id="petsService" class="com.springdisplay.springwebdisplay.service.PetsService">
+        <beans:property name="apiEnv" value="#{systemProperties['PETS_SERVICE']}"/>
+    </beans:bean> -->
 </beans:beans>
