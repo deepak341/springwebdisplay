@@ -42,7 +42,7 @@
 	<c:if test="${!empty pets._id}">
 	<h3> Edit Pet </h3>
 	<sform:form method="post" modelAttribute="pets" action="save">
-	<sform:hidden path="_id" value = "${_id}"/>
+	<sform:hidden path="_id" />
 		<table>
 			<tr>
 				<td>Pet name:</td>
