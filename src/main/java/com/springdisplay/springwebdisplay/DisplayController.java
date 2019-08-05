@@ -57,12 +57,12 @@ public class DisplayController {
 		System.out.println("petsListUri: "+getPetsApiURL());
 		ResponseEntity<String> response = restTemplate.exchange(getPetsApiURL()+id, HttpMethod.DELETE, request, String.class);
 		//model.addAttribute("message", "Record deleted successfully");
-		System.out.println(response.getBody());
 		return "redirect:/getPetsList";
 	}
 	
 	@RequestMapping(value="/savePets", method=RequestMethod.POST)
-	private String editPets(Pets pets, BindingResult bindingResult, Model model) {
+	private String addPets(Pets pets, BindingResult bindingResult, Model model) {
+		System.out.println("Inside addPets");
 		if (bindingResult.hasErrors()) {
 			return "redirect:/getPetsList";
 		}
@@ -70,10 +70,39 @@ public class DisplayController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Pets> request = new HttpEntity<Pets>(pets, headers);
-		System.out.println("petsListUri: "+getPetsApiURL());
 		ResponseEntity<String> response = restTemplate.exchange(getPetsApiURL(), HttpMethod.POST, request, String.class);
+		System.out.println("Inside addPets"+response);
 		//model.addAttribute("message", "Record added successfully");
-		System.out.println(response.getBody());
+		return "redirect:/getPetsList";
+	}
+	
+	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
+	private String editPets(@PathVariable String id, Model model) {
+		System.out.println("Inside editPets");
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<String> request = new HttpEntity<String>("", headers);
+		ResponseEntity<Pets> responsePets = restTemplate.exchange(getPetsApiURL()+id, HttpMethod.GET, request, Pets.class);
+		model.addAttribute("pets", responsePets.getBody());
+		
+		ResponseEntity<Pets[]> response = restTemplate.exchange(getPetsApiURL(), HttpMethod.GET, request, Pets[].class);
+		model.addAttribute("response", response.getBody());
+		return "pets";
+	}
+	
+	@RequestMapping(value="/edit/save", method=RequestMethod.POST)
+	private String editSavePets(Pets pets, BindingResult bindingResult, Model model) {
+		System.out.println("Inside editSavePets: "+pets);
+		if (bindingResult.hasErrors()) {
+			return "redirect:/getPetsList";
+		}
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<Pets> request = new HttpEntity<Pets>(pets, headers);
+		ResponseEntity<String> response = restTemplate.exchange(getPetsApiURL()+pets.get_id(), HttpMethod.PUT, request, String.class);
+		//model.addAttribute("message", "Record added successfully");
 		return "redirect:/getPetsList";
 	}
 	
